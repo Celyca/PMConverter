@@ -23,13 +23,11 @@
         </dependency>
 
         <dependency>
-            <groupId>at</groupId>
-            <artifactId>jXPDL</artifactId>
-            <version>2.3-1</version>
+            <groupId>at.fh</groupId>
+            <artifactId>jxpdl</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
-
-
 
     <repositories>
         <repository>
@@ -38,5 +36,4 @@
             <url>file://${project.basedir}/libs</url>
         </repository>
     </repositories>
-    
 </project>
