@@ -98,6 +98,7 @@ fabric.properties
 
 # Package Files #
 #*.jar
+*.iml
 *.war
 *.nar
 *.ear
