@@ -28,8 +28,5 @@ public class BpmnHandler {
         } catch (Exception e) {
             System.out.println("Something went wrong.");
         }
-
-        UserTask asd = new UserTask();
-
     }
 }
