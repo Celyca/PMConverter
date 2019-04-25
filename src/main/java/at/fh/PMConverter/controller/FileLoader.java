@@ -32,7 +32,7 @@ public class FileLoader {
 
             String ext =  filePath.substring(filePath.length() - 4);
             if (ext.toLowerCase().equals("bpmn")) {
-                BpmnHandler.getInstance().loadBpmnInstance(file);
+                BpmnHandler.getInstance().convertBpmnInstance(file);
             } else {
                 if (ext.toLowerCase().equals("xpdl"))
                 System.out.println("XPDL");

@@ -1,10 +1,8 @@
 package at.fh.PMConverter.controller.bpmn;
 
-import at.fh.PMConverter.controller.xpdl.XpdlHandler;
+import at.fh.PMConverter.controller.xpdl.XPDLController;
 import org.camunda.bpm.model.bpmn.Bpmn;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
-import org.camunda.bpm.model.bpmn.instance.UserTask;
-import org.camunda.bpm.model.xml.type.ModelElementType;
 
 import java.io.File;
 
@@ -21,12 +19,14 @@ public class BpmnHandler {
         return theInstance;
     }
 
-    public void loadBpmnInstance(File file) {
+    public void convertBpmnInstance(File file) {
         try {
             modelInstance = Bpmn.readModelFromFile(file);
-            XpdlHandler.getInstance().newXpdlInstance(modelInstance);
+            XPDLController.getInstance().convertToXpdl(modelInstance);
+
         } catch (Exception e) {
             System.out.println("Something went wrong.");
+            System.out.println(e.toString());
         }
     }
 }
