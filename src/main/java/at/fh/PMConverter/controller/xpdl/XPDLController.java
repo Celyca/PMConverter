@@ -42,7 +42,6 @@ public class XPDLController {
         boundsType = bpmnInstance.getModel().getType(Bounds.class);
 
 
-
         Collection<Process> processElements = getProcessElements();
 
         processElements.forEach(this::convertProcess);

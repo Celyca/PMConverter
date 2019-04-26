@@ -1,5 +1,6 @@
 package at.fh.PMConverter.controller.xpdl;
 
+import at.fh.PMConverter.controller.bpmn.BPMNController;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 import org.enhydra.jxpdl.StandardPackageValidator;
 import org.enhydra.jxpdl.XMLInterface;
@@ -15,6 +16,40 @@ import java.util.List;
 import java.util.Properties;
 
 public class XPDLHandler {
+
+    //---------------------------------------------------------------------------------------------
+
+    private Package xpdlFileInstance = null;
+    private static XPDLHandler theInstance;
+
+
+    public static XPDLHandler getInstance() {
+        if (theInstance == null)
+            theInstance = new XPDLHandler();
+
+        return theInstance;
+    }
+
+    //---------------------------------------------------------------------------------------------
+
+    public void convertXpdlInstance(File file) throws Exception {
+        //try {
+            XMLInterfaceImpl xmli = new XMLInterfaceImpl();
+            String inputFile = file.getCanonicalPath();
+            xpdlFileInstance = xmli.openPackage(inputFile, true);
+            xpdlFileInstance.setReadOnly(true);
+
+            BPMNController.getInstance().convertToXpdl(xpdlFileInstance);
+/*
+        } catch (Exception e) {
+            System.out.println("Something went wrong.");
+            System.out.println(e.toString());
+            System.out.println(e.getMessage());
+        }
+        */
+    }
+
+    //---------------------------------------------------------------------------------------------
 
     static void validateXpdlInstance(Package xpdlInstance) throws Exception {
 

@@ -1,6 +1,7 @@
 package at.fh.PMConverter.controller;
 
-import at.fh.PMConverter.controller.bpmn.BpmnHandler;
+import at.fh.PMConverter.controller.bpmn.BPMNHandler;
+import at.fh.PMConverter.controller.xpdl.XPDLHandler;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -16,7 +17,7 @@ public class FileLoader {
         return theInstance;
     }
 
-    public void loadFile() {
+    public void loadFile() throws Exception {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select .bpmn or .xpdl file");
@@ -32,10 +33,10 @@ public class FileLoader {
 
             String ext =  filePath.substring(filePath.length() - 4);
             if (ext.toLowerCase().equals("bpmn")) {
-                BpmnHandler.getInstance().convertBpmnInstance(file);
+                BPMNHandler.getInstance().convertBpmnInstance(file);
             } else {
                 if (ext.toLowerCase().equals("xpdl"))
-                System.out.println("XPDL");
+                    XPDLHandler.getInstance().convertXpdlInstance(file);
             }
             System.out.println(filePath);
         }

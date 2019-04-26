@@ -9,7 +9,7 @@ import org.enhydra.jxpdl.elements.TransitionRestriction;
 import java.util.Collection;
 import java.util.Optional;
 
-public class Transition {
+public class Transitions {
 
     public static TransitionRestriction checkTransition(FlowNode flowNode, Activity activity) {
 
@@ -31,7 +31,8 @@ public class Transition {
                 tre.getSplit().setTypeExclusive();
                 return tre;
             } else if (incoming.size() > 1) {
-                System.out.println("asdf");
+                tre.getJoin().setTypeParallel();
+                return tre;
             }
         }
 

@@ -4,6 +4,8 @@ import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
 import org.camunda.bpm.model.xml.instance.ModelElementInstance;
 import org.camunda.bpm.model.xml.type.ModelElementType;
+import org.enhydra.jxpdl.elements.ConnectorGraphicsInfo;
+import org.enhydra.jxpdl.elements.NodeGraphicsInfo;
 import org.enhydra.jxpdl.elements.Transition;
 import org.enhydra.jxpdl.elements.WorkflowProcess;
 
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class SequenceFlows {
+public class XPDLSequenceFlow {
 
     public static List<Transition> generateSf(WorkflowProcess wfp, Process bpmnProcess, ModelElementType taskType) {
         Collection<SequenceFlow> sfElements = new ArrayList<>();
@@ -29,6 +31,11 @@ public class SequenceFlows {
             sf.setTo(x.getTarget().getId());
             sf.setName(x.getName());
             sf.getCondition().setTypeNONE();
+
+            //---------------------------------------------------------------------------------------------
+
+            ConnectorGraphicsInfo cgi = GraphicsInfo.generateSequenceFlowGraphics(x, sf);
+            sf.getConnectorGraphicsInfos().add(cgi);
 
             xpdlSF.add(sf);
         });

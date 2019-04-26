@@ -5,7 +5,7 @@ import org.enhydra.jxpdl.XMLUtil;
 import org.enhydra.jxpdl.elements.Package;
 import org.enhydra.jxpdl.elements.WorkflowProcess;
 
-public class XPDLWFP {
+public class XPDLWorkflowProcess {
 
     public static WorkflowProcess generateWFP(Package pkg, Process bpmnProcess) {
         WorkflowProcess wfp = (WorkflowProcess) pkg.getWorkflowProcesses().generateNewElement();

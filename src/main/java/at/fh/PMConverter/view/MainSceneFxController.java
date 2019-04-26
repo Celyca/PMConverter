@@ -7,7 +7,7 @@ import java.io.File;
 
 public class MainSceneFxController implements FxController {
 
-    public void loadFile() {
+    public void loadFile() throws Exception {
         FileLoader.getInstance().loadFile();
     }
 }
