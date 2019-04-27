@@ -23,8 +23,8 @@ public class GraphicsInfo {
 
             ngi.setWidth(bounds.getWidth().intValue());
             ngi.setHeight(bounds.getHeight().intValue());
-            ngi.getCoordinates().setXCoordinate(String.valueOf(bounds.getWidth().intValue()));
-            ngi.getCoordinates().setYCoordinate(String.valueOf(bounds.getWidth().intValue()));
+            ngi.getCoordinates().setXCoordinate(String.valueOf(bounds.getX().intValue()));
+            ngi.getCoordinates().setYCoordinate(String.valueOf(bounds.getY().intValue()));
         }
 
         return ngi;

@@ -1,8 +1,10 @@
 package at.fh.PMConverter.controller.bpmn.element;
 
 import at.fh.PMConverter.controller.bpmn.BPMNController;
+import javafx.util.Pair;
 import org.camunda.bpm.model.bpmn.instance.*;
 import org.camunda.bpm.model.bpmn.instance.Process;
+import org.camunda.bpm.model.bpmn.instance.bpmndi.BpmnShape;
 import org.enhydra.jxpdl.elements.Activities;
 import org.enhydra.jxpdl.elements.Activity;
 import org.enhydra.jxpdl.elements.WorkflowProcess;
@@ -12,17 +14,19 @@ import java.util.Collection;
 
 public class BPMNActivity {
 
-    public static Collection<FlowNode> generateActivity(WorkflowProcess wfp, Process process, Diagram diagram) {
+    public static Collection<Pair<FlowNode, BpmnShape>> generateActivity(WorkflowProcess wfp, Process process) {
 
         Activities activities = wfp.getActivities();
+
 
         Collection<Activity> activityElements = new ArrayList<>();
         activities.toElements().forEach(x -> activityElements.add((Activity) x));
 
 
-        Collection<FlowNode> bpmnActivityElements = new ArrayList<>();
+        Collection<Pair<FlowNode, BpmnShape>> bpmnActivityElements = new ArrayList<>();
         activityElements.forEach(x -> {
             int type = x.getActivityType();
+            BpmnShape shape = null;
 
             //---------------------------------------------------------------------------------------------
             /*
@@ -33,34 +37,42 @@ public class BPMNActivity {
             */
             //---------------------------------------------------------------------------------------------
             FlowNode activity = null;
-            if (type == 2) {
+            System.out.println(type + " " + x.getName());
+            if (type == 2 || type == 1) {
                 activity = BPMNController.getInstance().getBpmnInstance().newInstance(Task.class);
-                diagram.getShapes().add(Diagram.generateShape(x, activity));
-                bpmnActivityElements.add(setValue(activity, x));
+                FlowNode element = setValue(activity, x);
+                shape = Diagram.generateShape(x, element);
+                Pair<FlowNode, BpmnShape> pair = new Pair<FlowNode, BpmnShape>(element, shape);
+                bpmnActivityElements.add(pair);
                 //---------------------------------------------------------------------------------------------
             } else if (type == 6) {
                 activity = BPMNController.getInstance().getBpmnInstance().newInstance(StartEvent.class);
-                diagram.getShapes().add(Diagram.generateShape(x, activity));
-                bpmnActivityElements.add(setValue(activity, x));
+                FlowNode element = setValue(activity, x);
+                shape = Diagram.generateShape(x, element);
+                Pair<FlowNode, BpmnShape> pair = new Pair<FlowNode, BpmnShape>(element, shape);
+                bpmnActivityElements.add(pair);
                 //---------------------------------------------------------------------------------------------
             } else if (type == 7) {
                 activity = BPMNController.getInstance().getBpmnInstance().newInstance(EndEvent.class);
-                diagram.getShapes().add(Diagram.generateShape(x, activity));
-                bpmnActivityElements.add(setValue(activity, x));
+                FlowNode element = setValue(activity, x);
+                shape = Diagram.generateShape(x, element);
+                Pair<FlowNode, BpmnShape> pair = new Pair<FlowNode, BpmnShape>(element, shape);
+                bpmnActivityElements.add(pair);
                 //---------------------------------------------------------------------------------------------
             } else if (type == 0 && x.getActivityTypes().getRoute().getGatewayType().toLowerCase().equals("exclusive")) {
                 activity = BPMNController.getInstance().getBpmnInstance().newInstance(ExclusiveGateway.class);
-                diagram.getShapes().add(Diagram.generateShape(x, activity));
-                bpmnActivityElements.add(setValue(activity, x));
+                FlowNode element = setValue(activity, x);
+                shape = Diagram.generateShape(x, element);
+                Pair<FlowNode, BpmnShape> pair = new Pair<FlowNode, BpmnShape>(element, shape);
+                bpmnActivityElements.add(pair);
                 //---------------------------------------------------------------------------------------------
             } else if (type == 0 && x.getActivityTypes().getRoute().getGatewayType().toLowerCase().equals("parallel")) {
                 activity = BPMNController.getInstance().getBpmnInstance().newInstance(ParallelGateway.class);
-                diagram.getShapes().add(Diagram.generateShape(x, activity));
-                bpmnActivityElements.add(setValue(activity, x));
-
+                FlowNode element = setValue(activity, x);
+                shape = Diagram.generateShape(x, element);
+                Pair<FlowNode, BpmnShape> pair = new Pair<FlowNode, BpmnShape>(element, shape);
+                bpmnActivityElements.add(pair);
             }
-
-
         });
         return bpmnActivityElements;
     }

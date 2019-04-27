@@ -26,19 +26,23 @@ public class XPDLLane {
 
             //---------------------------------------------------------------------------------------------
 
-            Collection<ModelElementInstance> boundsElements = x.getDiagramElement().getChildElementsByType(XPDLController.getInstance().boundsType);
+            try {
+                Collection<ModelElementInstance> boundsElements = x.getDiagramElement().getChildElementsByType(XPDLController.getInstance().boundsType);
 
-            NodeGraphicsInfo ngi = (NodeGraphicsInfo) lane.getNodeGraphicsInfos().generateNewElement();
+                NodeGraphicsInfo ngi = (NodeGraphicsInfo) lane.getNodeGraphicsInfos().generateNewElement();
 
-            if (boundsElements.iterator().hasNext()) {
-                Bounds bounds = (Bounds) boundsElements.iterator().next();
+                if (boundsElements.iterator().hasNext()) {
+                    Bounds bounds = (Bounds) boundsElements.iterator().next();
 
-                ngi.setWidth(bounds.getWidth().intValue());
-                ngi.setHeight(bounds.getHeight().intValue());
-                ngi.getCoordinates().setXCoordinate(String.valueOf(bounds.getWidth().intValue()));
-                ngi.getCoordinates().setYCoordinate(String.valueOf(bounds.getWidth().intValue()));
+                    ngi.setWidth(bounds.getWidth().intValue());
+                    ngi.setHeight(bounds.getHeight().intValue());
+                    ngi.getCoordinates().setXCoordinate(String.valueOf(bounds.getWidth().intValue()));
+                    ngi.getCoordinates().setYCoordinate(String.valueOf(bounds.getWidth().intValue()));
 
-                lane.getNodeGraphicsInfos().add(ngi);
+                    lane.getNodeGraphicsInfos().add(ngi);
+                }
+            } catch (Exception e) {
+
             }
 
             xpdlLanes.add(lane);

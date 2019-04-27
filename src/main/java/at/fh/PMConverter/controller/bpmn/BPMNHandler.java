@@ -30,21 +30,21 @@ public class BPMNHandler {
 
     //---------------------------------------------------------------------------------------------
 
-    public void convertBpmnInstance(File file) {
-        try {
+    public void convertBpmnInstance(File file) throws Exception {
+        //try {
             modelInstance = Bpmn.readModelFromFile(file);
             XPDLController.getInstance().convertToXpdl(modelInstance);
 
-        } catch (Exception e) {
-            System.out.println("Something went wrong.");
-            System.out.println(e.toString());
-        }
+        //} catch (Exception e) {
+            //System.out.println("Something went wrong.");
+            //System.out.println(e.toString());
+        //}
     }
 
     //---------------------------------------------------------------------------------------------
 
     static void validateBpmnInstance(BpmnModelInstance bpmnInstance) throws Exception {
-        //Bpmn.validateModel(bpmnInstance);
+        Bpmn.validateModel(bpmnInstance);
         saveBpmnInstance(bpmnInstance);
     }
 

@@ -16,9 +16,6 @@ import java.util.Random;
 
 public class Diagram {
 
-    private Collection<BpmnShape> shapes = new ArrayList<>();;
-    private Collection<BpmnEdge> edges = new ArrayList<>();;
-
     public static BpmnShape generateShape(Activity activity, FlowNode node){
 
         NodeGraphicsInfos ngis = activity.getNodeGraphicsInfos();
@@ -26,16 +23,14 @@ public class Diagram {
         ArrayList<NodeGraphicsInfo> ngiElements = new ArrayList<>();
         ngis.toElements().forEach(x -> ngiElements.add((NodeGraphicsInfo) x));
 
-        if (!ngiElements.isEmpty() && node == null) {
+        if (!ngiElements.isEmpty() && node != null) {
             BpmnShape shape = BPMNController.getInstance().getBpmnInstance().newInstance(BpmnShape.class);
             Bounds shapeBounds = BPMNController.getInstance().getBpmnInstance().newInstance(Bounds.class);
-
-            shape.setBpmnElement(node);
 
             shapeBounds.setHeight(ngiElements.get(0).getHeight());
             shapeBounds.setWidth(ngiElements.get(0).getWidth());
             shapeBounds.setX(Double.valueOf(ngiElements.get(0).getCoordinates().getXCoordinate()));
-            shapeBounds.setX(Double.valueOf(ngiElements.get(0).getCoordinates().getYCoordinate()));
+            shapeBounds.setY(Double.valueOf(ngiElements.get(0).getCoordinates().getYCoordinate()));
 
             shape.addChildElement(shapeBounds);
 
@@ -54,33 +49,23 @@ public class Diagram {
         ArrayList<ConnectorGraphicsInfo> cgiElements = new ArrayList<>();
         cgis.toElements().forEach(x -> cgiElements.add((ConnectorGraphicsInfo) x));
 
-        if (!cgiElements.isEmpty() && flow == null) {
+        if (!cgiElements.isEmpty() && flow != null) {
             BpmnEdge edge = BPMNController.getInstance().getBpmnInstance().newInstance(BpmnEdge.class);
-
-            edge.setBpmnElement(flow);
 
             Coordinatess coordinates = cgiElements.get(0).getCoordinatess();
 
             ArrayList<Coordinates> coordinateElements = new ArrayList<>();
-            cgis.toElements().forEach(x -> coordinateElements.add((Coordinates) x));
+            coordinates.toElements().forEach(x -> coordinateElements.add((Coordinates) x));
 
+            if (!coordinateElements.isEmpty())
             coordinateElements.forEach(y -> {
                 Waypoint waypoint = BPMNController.getInstance().getBpmnInstance().newInstance(Waypoint.class);
                 waypoint.setX(Double.valueOf(y.getXCoordinate()));
                 waypoint.setY(Double.valueOf(y.getYCoordinate()));
                 edge.addChildElement(waypoint);
             });
-
             return edge;
         }
         return null;
-    }
-
-    public Collection<BpmnShape> getShapes() {
-        return shapes;
-    }
-
-    public Collection<BpmnEdge> getEdges() {
-        return edges;
     }
 }
