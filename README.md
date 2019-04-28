@@ -1,4 +1,4 @@
-#PMConverter
+# PMConverter
 
 This project is a tool for converting BPMN and XPDL process models. 
 
