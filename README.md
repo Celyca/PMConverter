@@ -6,7 +6,6 @@ This project is a tool for converting BPMN and XPDL process models.
 - Java JRE 1.8 or higher (https://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)
 - For Developers: 
     - JDK 1.8 or higher ( https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-    -Eclipse with JavaFX and Maven Support (Tested with Eclipse Jee Oxygen)
        - JavaFX-Plugin: https://www.eclipse.org/efxclipse/install.html
        
 ## Project Structure
