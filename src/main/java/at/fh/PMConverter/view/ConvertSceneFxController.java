@@ -23,13 +23,15 @@ import org.enhydra.jxpdl.elements.Package;
 import java.io.File;
 
 
-public class ConvertSceneController implements FxController {
+public class ConvertSceneFxController implements FxController {
 
     private File file;
     private Boolean bpmn;
     private BpmnModelInstance bpmnInstance;
     private Package xpdlInstance;
-    private static ConvertSceneController theInstance;
+    private static ConvertSceneFxController theInstance;
+
+    //---------------------------------------------------------------------------------------------
 
     @FXML
     private Button start;
@@ -68,12 +70,16 @@ public class ConvertSceneController implements FxController {
         });
     }
 
-    public static ConvertSceneController getInstance() {
+    //---------------------------------------------------------------------------------------------
+
+    public static ConvertSceneFxController getInstance() {
         if (theInstance == null)
-            theInstance = new ConvertSceneController();
+            theInstance = new ConvertSceneFxController();
 
         return theInstance;
     }
+
+    //---------------------------------------------------------------------------------------------
 
     public void start(ActionEvent event) throws Exception{
         start.setDisable(true);
@@ -110,16 +116,18 @@ public class ConvertSceneController implements FxController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/at/fh/PMConverter/fxml/SaveScene.fxml"));
         Parent root = (Parent)fxmlLoader.load();
 
-        SaveSceneController controller = fxmlLoader.<SaveSceneController>getController();
+        SaveSceneFxController controller = fxmlLoader.<SaveSceneFxController>getController();
         controller.setBpmnInstance(bpmnInstance);
         controller.setXpdlInstance(xpdlInstance);
-        controller.setBpmn(bpmn);
+        controller.setBpmn(!bpmn);
 
         Scene viewScene = new Scene(root);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(viewScene);
         window.show();
     }
+
+    //---------------------------------------------------------------------------------------------
 
     public void setFile(File file) {
         this.file = file;

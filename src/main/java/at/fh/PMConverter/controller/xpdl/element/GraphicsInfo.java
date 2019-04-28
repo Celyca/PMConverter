@@ -30,6 +30,8 @@ public class GraphicsInfo {
         return ngi;
     }
 
+    //---------------------------------------------------------------------------------------------
+
     public static ConnectorGraphicsInfo generateSequenceFlowGraphics(SequenceFlow sequenceFlow, Transition transition) {
 
         BpmnEdge edge = sequenceFlow.getDiagramElement();

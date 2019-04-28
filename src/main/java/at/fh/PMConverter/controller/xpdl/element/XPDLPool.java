@@ -12,7 +12,7 @@ public class XPDLPool {
         pool.setBoundaryVisible(true);
 
         Random rand = new Random();
-        int value = rand.nextInt(5000);
+        int value = rand.nextInt(5000000);
         pool.setId(String.valueOf(value));
 
         return pool;

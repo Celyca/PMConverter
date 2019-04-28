@@ -15,6 +15,8 @@ public class FileLoader {
         return theInstance;
     }
 
+    //---------------------------------------------------------------------------------------------
+
     public File loadFile() throws Exception {
 
         FileChooser fileChooser = new FileChooser();
@@ -27,5 +29,23 @@ public class FileLoader {
         );
         File file = fileChooser.showOpenDialog(null);
         return file;
+    }
+
+    public File saveFile(Boolean bpmn) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save instance");
+        if (bpmn) {
+            fileChooser.setInitialFileName("PMConverter.bpmn");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("BPMN 2.0", "*.bpmn")
+            );
+        } else {
+            fileChooser.setInitialFileName("PMConverter.xpdl");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("XPDL", "*.xpdl")
+            );
+        }
+        File saveFile = fileChooser.showSaveDialog(null);
+        return saveFile;
     }
 }

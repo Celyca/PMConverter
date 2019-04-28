@@ -8,7 +8,6 @@ import org.camunda.bpm.model.bpmn.instance.FlowNode;
 import org.camunda.bpm.model.bpmn.instance.Process;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
 import org.camunda.bpm.model.bpmn.instance.bpmndi.BpmnEdge;
-import org.camunda.bpm.model.xml.instance.ModelElementInstance;
 import org.enhydra.jxpdl.elements.Transition;
 import org.enhydra.jxpdl.elements.Transitions;
 import org.enhydra.jxpdl.elements.WorkflowProcess;

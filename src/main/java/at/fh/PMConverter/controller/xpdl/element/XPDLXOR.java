@@ -15,38 +15,38 @@ import java.util.List;
 
 public class XPDLXOR {
 
-    public static List<Activity> generateStart(WorkflowProcess wfp, Process bpmnProcess, ModelElementType taskType) {
-        Collection<ExclusiveGateway> andElements = new ArrayList<>();
+    public static List<Activity> generateXOR(WorkflowProcess wfp, Process bpmnProcess, ModelElementType elementType) {
+        Collection<ExclusiveGateway> xorElements = new ArrayList<>();
 
-        Collection<ModelElementInstance> elements = bpmnProcess.getChildElementsByType(taskType);
+        Collection<ModelElementInstance> elements = bpmnProcess.getChildElementsByType(elementType);
 
-        elements.forEach(x -> andElements.add((ExclusiveGateway)x));
+        elements.forEach(x -> xorElements.add((ExclusiveGateway)x));
 
-        List<Activity> xpdlStart = new ArrayList<>();
-        andElements.forEach(x -> {
-            Activity start = (Activity) wfp.getActivities().generateNewElement();
+        List<Activity> xpdlXOR = new ArrayList<>();
+        xorElements.forEach(x -> {
+            Activity xor = (Activity) wfp.getActivities().generateNewElement();
 
-            start.setId(x.getId());
-            start.setName(x.getName());
-            start.getActivityTypes().setRoute();
-            start.getActivityTypes().getRoute().setGatewayTypeExclusive();
+            xor.setId(x.getId());
+            xor.setName(x.getName());
+            xor.getActivityTypes().setRoute();
+            xor.getActivityTypes().getRoute().setGatewayTypeExclusive();
 
             //---------------------------------------------------------------------------------------------
 
-            TransitionRestriction tre = Transitions.checkTransition(x, start);
+            TransitionRestriction tre = Transitions.checkTransition(x, xor);
             if (tre != null) {
-                start.getTransitionRestrictions().add(tre);
+                xor.getTransitionRestrictions().add(tre);
             }
 
 
             //---------------------------------------------------------------------------------------------
 
-            NodeGraphicsInfo ngi = GraphicsInfo.generateGraphics(x, start);
-            start.getNodeGraphicsInfos().add(ngi);
+            NodeGraphicsInfo ngi = GraphicsInfo.generateGraphics(x, xor);
+            xor.getNodeGraphicsInfos().add(ngi);
 
-            xpdlStart.add(start);
+            xpdlXOR.add(xor);
         });
 
-        return xpdlStart;
+        return xpdlXOR;
     }
 }

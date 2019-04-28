@@ -36,6 +36,8 @@ public class XPDLController {
         return theInstance;
     }
 
+    //---------------------------------------------------------------------------------------------
+
     public void convertToXpdl(BpmnModelInstance bpmnModelInstance) {
         bpmnInstance = bpmnModelInstance;
         Collection<Process> processElements = null;
@@ -55,15 +57,21 @@ public class XPDLController {
             log = log + "\n\nFailed to create or load process elements";
             log = log + "\nError: " + e.toString() + "\nMessage: " + e.getMessage();
         }
+
+        //---------------------------------------------------------------------------------------------
+
         if (processElements != null) {
             processElements.forEach(this::convertProcess);
         }
+
+        //---------------------------------------------------------------------------------------------
 
         log = log + "\nDone!";
         progress = 1.0;
     }
 
-    // Get all <Process> elements
+    //---------------------------------------------------------------------------------------------
+
     private Collection<Process> getProcessElements() {
         ModelElementType processType = bpmnInstance.getModel().getType(Process.class);
         Collection<ModelElementInstance> elements = bpmnInstance.getModelElementsByType(processType);
@@ -74,11 +82,14 @@ public class XPDLController {
         return processElements;
     }
 
+    //---------------------------------------------------------------------------------------------
+
     private void convertProcess(Process process){
         try {
             // Generate WFP
             WorkflowProcess wfp = XPDLWorkflowProcess.generateWFP(xpdlInstance, process);
-            log = log + "\nConvert process\nID: " + wfp.getId() + "\nName: " + wfp.getName();
+            log = log + "\n\nConvert process\nID: " + wfp.getId() + "\nName: " + wfp.getName() + "\n";
+
             //---------------------------------------------------------------------------------------------
 
             // Generate Pool
@@ -113,15 +124,16 @@ public class XPDLController {
             wfp.getActivities().addAll(serviceTasks);
 
             //---------------------------------------------------------------------------------------------
+
             log = log + "\nGenerate AND-Gateway";
             //Generate AND
             ModelElementType andType = bpmnInstance.getModel().getType(ParallelGateway.class);
-            List<Activity> andGateways = XPDLAND.generateStart(wfp, process, andType);
+            List<Activity> andGateways = XPDLAND.generateAND(wfp, process, andType);
 
             log = log + "\nGenerate XOR-Gateway";
             //Generate XOR
             ModelElementType xorType = bpmnInstance.getModel().getType(ExclusiveGateway.class);
-            List<Activity> xorGateways = XPDLXOR.generateStart(wfp, process, xorType);
+            List<Activity> xorGateways = XPDLXOR.generateXOR(wfp, process, xorType);
 
             //Add to WFP
             wfp.getActivities().addAll(andGateways);
@@ -162,6 +174,8 @@ public class XPDLController {
             log = log + "\nError: " + e.toString() + "\nMessage: " + e.getMessage();
         }
     }
+
+    //---------------------------------------------------------------------------------------------
 
     public String getLog() {
         return log;

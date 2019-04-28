@@ -15,11 +15,10 @@ import java.util.List;
 
 public class XPDLEnd {
 
-
-    public static List<Activity> generateEnd(WorkflowProcess wfp, Process bpmnProcess, ModelElementType taskType) {
+    public static List<Activity> generateEnd(WorkflowProcess wfp, Process bpmnProcess, ModelElementType elementType) {
         Collection<EndEvent> endElements = new ArrayList<>();
 
-        Collection<ModelElementInstance> elements = bpmnProcess.getChildElementsByType(taskType);
+        Collection<ModelElementInstance> elements = bpmnProcess.getChildElementsByType(elementType);
 
         elements.forEach(x -> endElements.add((EndEvent)x));
 

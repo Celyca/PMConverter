@@ -1,22 +1,33 @@
 package at.fh.PMConverter.view;
 
+import at.fh.PMConverter.controller.FileLoader;
 import at.fh.PMConverter.controller.FxController;
 import at.fh.PMConverter.controller.bpmn.BPMNHandler;
 import at.fh.PMConverter.controller.xpdl.XPDLHandler;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 import org.enhydra.jxpdl.elements.Package;
 
-public class SaveSceneController implements FxController {
+import java.io.File;
+import java.io.IOException;
+
+public class SaveSceneFxController implements FxController {
+
     private BpmnModelInstance bpmnInstance;
     private Package xpdlInstance;
     private Boolean bpmn;
-    private Boolean alreadyValidate = false;
+
+    //---------------------------------------------------------------------------------------------
 
     @FXML
     private Button save;
@@ -41,45 +52,44 @@ public class SaveSceneController implements FxController {
         });
     }
 
+    //---------------------------------------------------------------------------------------------
+
     public void save(ActionEvent event) {
+        File file = FileLoader.getInstance().saveFile(bpmn);
         if (bpmn) {
-            if(alreadyValidate) {
-
-            } else {
-
-            }
-        } else {
-
-            if(alreadyValidate) {
-
-            } else {
-
-            }
-        }
-
-        //appendLog("\nValidate the instance");
-        //setProgress(0.9);
-
-        //XPDLHandler.validateXpdlInstance(xpdlInstance);
-
-
-
-
-
-
-
-        //BPMNHandler.validateBpmnInstance(bpmnInstance);
-    }
-
-    public void validate(ActionEvent event) {
-        if (!bpmn) {
-            BPMNHandler.getInstance().validateBpmnInstance(bpmnInstance);
+            BPMNHandler.getInstance().saveBpmnInstance(bpmnInstance, file);
             appendLog(BPMNHandler.getInstance().getLog());
         } else {
-            XPDLHandler.getInstance().validateXpdlInstance(xpdlInstance);
+            XPDLHandler.getInstance().saveXpdlInstance(xpdlInstance, file);
             appendLog(XPDLHandler.getInstance().getLog());
         }
     }
+
+    public void validate(ActionEvent event) {
+        if (bpmn) {
+            BPMNHandler.getInstance().validateBpmnInstance(bpmnInstance);
+            appendLog(BPMNHandler.getInstance().getLog());
+            validate.setDisable(true);
+        } else {
+            XPDLHandler.getInstance().validateXpdlInstance(xpdlInstance);
+            appendLog(XPDLHandler.getInstance().getLog());
+            validate.setDisable(true);
+        }
+    }
+
+    public void back(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/at/fh/PMConverter/fxml/MainScene.fxml"));
+        Parent root = (Parent)fxmlLoader.load();
+
+        MainSceneFxController controller = fxmlLoader.<MainSceneFxController>getController();
+
+        Scene viewScene = new Scene(root);
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        window.setScene(viewScene);
+        window.show();
+    }
+
+    //---------------------------------------------------------------------------------------------
 
     public void setBpmnInstance(BpmnModelInstance bpmnInstance) {
         this.bpmnInstance = bpmnInstance;

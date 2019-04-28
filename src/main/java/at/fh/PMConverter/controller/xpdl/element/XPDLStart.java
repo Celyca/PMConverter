@@ -15,10 +15,10 @@ import java.util.List;
 
 public class XPDLStart {
 
-    public static List<Activity> generateStart(WorkflowProcess wfp, Process bpmnProcess, ModelElementType taskType) {
+    public static List<Activity> generateStart(WorkflowProcess wfp, Process bpmnProcess, ModelElementType elementType) {
         Collection<StartEvent> startElements = new ArrayList<>();
 
-        Collection<ModelElementInstance> elements = bpmnProcess.getChildElementsByType(taskType);
+        Collection<ModelElementInstance> elements = bpmnProcess.getChildElementsByType(elementType);
 
         elements.forEach(x -> startElements.add((StartEvent)x));
 

@@ -19,6 +19,8 @@ public class MainSceneFxController implements FxController {
 
     private File file;
 
+    //---------------------------------------------------------------------------------------------
+
     @FXML
     private TextField path;
 
@@ -28,6 +30,8 @@ public class MainSceneFxController implements FxController {
     @FXML
     private Button next;
 
+    //---------------------------------------------------------------------------------------------
+
     public void loadFile(ActionEvent event) throws Exception {
         file = FileLoader.getInstance().loadFile();
         if (file != null) {
@@ -35,7 +39,9 @@ public class MainSceneFxController implements FxController {
             path.clear();
             path.setText(filePath);
             next.setDisable(false);
-            next.setVisible(true);
+        } else {
+            next.setDisable(true);
+            path.clear();
         }
     }
 
@@ -47,7 +53,7 @@ public class MainSceneFxController implements FxController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/at/fh/PMConverter/fxml/ConvertScene.fxml"));
         Parent root = (Parent)fxmlLoader.load();
 
-        ConvertSceneController controller = fxmlLoader.<ConvertSceneController>getController();
+        ConvertSceneFxController controller = fxmlLoader.<ConvertSceneFxController>getController();
         controller.setFile(file);
 
         Scene viewScene = new Scene(root);

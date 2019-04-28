@@ -15,37 +15,37 @@ import java.util.List;
 
 public class XPDLAND {
 
-    public static List<Activity> generateStart(WorkflowProcess wfp, Process bpmnProcess, ModelElementType taskType) {
+    public static List<Activity> generateAND(WorkflowProcess wfp, Process bpmnProcess, ModelElementType elementType) {
         Collection<ParallelGateway> andElements = new ArrayList<>();
 
-        Collection<ModelElementInstance> elements = bpmnProcess.getChildElementsByType(taskType);
+        Collection<ModelElementInstance> elements = bpmnProcess.getChildElementsByType(elementType);
 
         elements.forEach(x -> andElements.add((ParallelGateway)x));
 
-        List<Activity> xpdlStart = new ArrayList<>();
+        List<Activity> xpdlAND = new ArrayList<>();
         andElements.forEach(x -> {
-            Activity start = (Activity) wfp.getActivities().generateNewElement();
+            Activity and = (Activity) wfp.getActivities().generateNewElement();
 
-            start.setId(x.getId());
-            start.setName(x.getName());
-            start.getActivityTypes().setRoute();
-            start.getActivityTypes().getRoute().setGatewayTypeParallel();
+            and.setId(x.getId());
+            and.setName(x.getName());
+            and.getActivityTypes().setRoute();
+            and.getActivityTypes().getRoute().setGatewayTypeParallel();
 
             //---------------------------------------------------------------------------------------------
 
-            TransitionRestriction tre = Transitions.checkTransition(x, start);
+            TransitionRestriction tre = Transitions.checkTransition(x, and);
             if (tre != null) {
-                start.getTransitionRestrictions().add(tre);
+                and.getTransitionRestrictions().add(tre);
             }
 
             //---------------------------------------------------------------------------------------------
 
-            NodeGraphicsInfo ngi = GraphicsInfo.generateGraphics(x, start);
-            start.getNodeGraphicsInfos().add(ngi);
+            NodeGraphicsInfo ngi = GraphicsInfo.generateGraphics(x, and);
+            and.getNodeGraphicsInfos().add(ngi);
 
-            xpdlStart.add(start);
+            xpdlAND.add(and);
         });
 
-        return xpdlStart;
+        return xpdlAND;
     }
 }

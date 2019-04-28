@@ -18,10 +18,8 @@ public class BPMNActivity {
 
         Activities activities = wfp.getActivities();
 
-
         Collection<Activity> activityElements = new ArrayList<>();
         activities.toElements().forEach(x -> activityElements.add((Activity) x));
-
 
         Collection<Pair<FlowNode, BpmnShape>> bpmnActivityElements = new ArrayList<>();
         activityElements.forEach(x -> {

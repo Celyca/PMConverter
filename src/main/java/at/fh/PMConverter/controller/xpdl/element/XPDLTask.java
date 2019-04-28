@@ -15,11 +15,11 @@ import java.util.List;
 
 public class XPDLTask {
 
-    public static List<Activity> generateTasks(WorkflowProcess wfp, Process bpmnProcess, ModelElementType taskType) {
+    public static List<Activity> generateTasks(WorkflowProcess wfp, Process bpmnProcess, ModelElementType elementType) {
 
         Collection<Task> taskElements = new ArrayList<>();
 
-        Collection<ModelElementInstance> elements = bpmnProcess.getChildElementsByType(taskType);
+        Collection<ModelElementInstance> elements = bpmnProcess.getChildElementsByType(elementType);
 
         elements.forEach(x -> taskElements.add((Task)x));
 

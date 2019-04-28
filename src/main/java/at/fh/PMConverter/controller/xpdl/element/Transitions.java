@@ -7,7 +7,6 @@ import org.enhydra.jxpdl.elements.TransitionRef;
 import org.enhydra.jxpdl.elements.TransitionRestriction;
 
 import java.util.Collection;
-import java.util.Optional;
 
 public class Transitions {
 
@@ -35,7 +34,6 @@ public class Transitions {
                 return tre;
             }
         }
-
         return null;
     }
 }

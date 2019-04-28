@@ -1,6 +1,5 @@
 package at.fh.PMConverter.controller.xpdl;
 
-import at.fh.PMConverter.controller.bpmn.BPMNController;
 import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 import org.enhydra.jxpdl.StandardPackageValidator;
 import org.enhydra.jxpdl.XMLInterface;
@@ -59,26 +58,29 @@ public class XPDLHandler {
             if (verrs.size() > 0) {
                 if (pv.hasErrors(verrs)) {
                     log = log + ("XPDL is NOT valid");
-                    log = log + ("Errors=" + verrs);
+                    log = log + ("\n\nErrors:\n" + verrs);
                 } else {
-                    log = log + ("...XPDL is valid ");
-                    log = log + ("...There are following warnings:" + verrs);
+                    log = log + ("XPDL is valid ");
+                    log = log + ("\n\nThere are following warnings:" + verrs);
                 }
             } else {
-                log = log + ("...XPDL is valid");
+                log = log + ("XPDL is valid");
             }
         } catch (Exception e) {
-            log = log + "\nSomething went wrong";
+            log = log + "\nSomething went wrong!";
             log = log + "\nError: " + e.toString() + "\nMessage: " + e.getMessage();
         }
     }
 
-    static void saveXpdlInstance(Package xpdlInstance) throws Exception {
-        File file = File.createTempFile("TestFile", ".xpdl");
-        XMLUtil.writeToFile(file.getAbsolutePath(), xpdlInstance);
-
-
-        System.out.println(file.getAbsolutePath());
+    public void saveXpdlInstance(Package xpdlInstance, File file) {
+        log = "";
+        try {
+            XMLUtil.writeToFile(file.getAbsolutePath(), xpdlInstance);
+            log = log + "\n\nFile saved \n Path: " + file.getAbsolutePath();
+        } catch (Exception e) {
+            log = log + "\n\nSomething went wrong!";
+            log = log + "\nError: " + e.toString() + "\nMessage: " + e.getMessage();
+        }
     }
 
     static Package newXpdlInstance(BpmnModelInstance bpmnInstance) {

@@ -40,6 +40,9 @@ public class BPMNController {
     public void convertToBpmn(Package xpdlModelInstance) throws Exception {
         xpdlInstance = xpdlModelInstance;
         Collection<WorkflowProcess> wfpElements = null;
+
+        //---------------------------------------------------------------------------------------------
+
         try {
             log = log + "\nCreate a new XPDL instance";
             progress = 0.2;
@@ -57,6 +60,8 @@ public class BPMNController {
             log = log + "\nError: " + e.toString() + "\nMessage: " + e.getMessage();
         }
 
+        //---------------------------------------------------------------------------------------------
+
         if (wfpElements != null) {
             wfpElements.forEach(this::convertWFP);
         }
@@ -64,7 +69,7 @@ public class BPMNController {
         //---------------------------------------------------------------------------------------------
 
         try {
-            log = log + "\nGenerate pools";
+            log = log + "\n\nGenerate pools";
             Collection<Participant> pools = BPMNPool.generatePool(bpmnInstance, xpdlInstance);
             if (pools != null) {
                 Collaboration collaboration = bpmnInstance.newInstance(Collaboration.class);
@@ -76,11 +81,10 @@ public class BPMNController {
             log = log + "\nError: " + e.toString() + "\nMessage: " + e.getMessage();
         }
 
-
         //---------------------------------------------------------------------------------------------
 
         try {
-            log = log + "\nAdd shapes";
+            log = log + "\n\nAdd shapes";
             shapes.forEach(x -> {
                 if (x.getPlane() != null && x.getShape() != null && x.getNode() != null) {
                     BpmnShape shape = x.getShape();
@@ -88,6 +92,8 @@ public class BPMNController {
                     x.getPlane().addChildElement(shape);
                 }
             });
+
+            //---------------------------------------------------------------------------------------------
 
             log = log + "\nAdd Edges";
             edges.forEach(x -> {
@@ -119,25 +125,25 @@ public class BPMNController {
 
 
                     x.getPlane().addChildElement(edge);
-                    //FlowNode node = bpmnInstance.getModelElementById(x.getNode().getId());
-                    //edge.setBpmnElement(node);
                 }
             });
 
-            log = log + "\nGenerate lanes";
+            //---------------------------------------------------------------------------------------------
+
+            log = log + "\n\nGenerate lanes";
             BPMNLane.generateLaneSet();
 
-            log = log + "\nDone!";
+            log = log + "\n\nDone!";
             progress = 1.0;
 
         } catch (Exception e) {
             log = log + "\n\nFailed to add edges and shapes";
             log = log + "\nError: " + e.toString() + "\nMessage: " + e.getMessage();
         }
-        //---------------------------------------------------------------------------------------------
     }
 
-    // Get all <WorkflowProcess> elements
+    //---------------------------------------------------------------------------------------------
+
     private Collection<WorkflowProcess> getWFPElements() {
 
         WorkflowProcesses wfps = xpdlInstance.getWorkflowProcesses();
@@ -152,10 +158,12 @@ public class BPMNController {
         try {
             // Generate WFP
             Process process = BPMNProcess.generateProcess(bpmnInstance, wfp);
-            log = log + "\nConvert process\nID: " + wfp.getId() + "\nName: " + wfp.getName();
+            log = log + "\n\nConvert process\nID: " + wfp.getId() + "\nName: " + wfp.getName() + "\n";
 
             BpmnDiagram diagram = bpmnInstance.newInstance(BpmnDiagram.class);
             BpmnPlane plane = bpmnInstance.newInstance(BpmnPlane.class);
+
+            //---------------------------------------------------------------------------------------------
 
             // Generate Activities
             log = log + "\nGenerate activities";
@@ -168,6 +176,7 @@ public class BPMNController {
 
             bpmnInstance.getDefinitions().addChildElement(process);
 
+            //---------------------------------------------------------------------------------------------
 
             // Generate Transition
             log = log + "\nGenerate transitions";
@@ -185,6 +194,8 @@ public class BPMNController {
             log = log + "\nError: " + e.toString() + "\nMessage: " + e.getMessage();
         }
     }
+
+    //---------------------------------------------------------------------------------------------
 
     public Package getXpdlInstance() {
         return xpdlInstance;

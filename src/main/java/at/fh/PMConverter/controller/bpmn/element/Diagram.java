@@ -4,15 +4,12 @@ import at.fh.PMConverter.controller.bpmn.BPMNController;
 import org.camunda.bpm.model.bpmn.instance.FlowNode;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
 import org.camunda.bpm.model.bpmn.instance.bpmndi.BpmnEdge;
-import org.camunda.bpm.model.bpmn.instance.bpmndi.BpmnLabelStyle;
 import org.camunda.bpm.model.bpmn.instance.bpmndi.BpmnShape;
 import org.camunda.bpm.model.bpmn.instance.dc.Bounds;
 import org.camunda.bpm.model.bpmn.instance.di.Waypoint;
 import org.enhydra.jxpdl.elements.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Random;
 
 public class Diagram {
 
@@ -33,9 +30,6 @@ public class Diagram {
             shapeBounds.setY(Double.valueOf(ngiElements.get(0).getCoordinates().getYCoordinate()));
 
             shape.addChildElement(shapeBounds);
-
-            Random rand = new Random();
-            int value = rand.nextInt(1000000000);
 
             return shape;
         }
