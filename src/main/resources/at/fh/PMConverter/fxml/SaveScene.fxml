@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="686.0" styleClass="root" stylesheets="@PMConverter.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.PMConverter.view.SaveSceneController">
+   <children>
+      <Button fx:id="save" layoutX="520.0" layoutY="441.0" mnemonicParsing="false" onAction="#save" prefHeight="41.0" prefWidth="132.0" styleClass="rich-blue" text="SAVE" />
+      <ImageView fitHeight="104.0" fitWidth="242.0" layoutX="440.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/FHJ.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="70.0" fitWidth="294.0" layoutX="-17.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/PMC.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="6.0" layoutX="-26.0" layoutY="70.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" styleClass="shape" width="729.0" />
+      <Text fx:id="label" layoutX="185.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bigText" wrappingWidth="316.4000244140625" />
+      <Button fx:id="validate" layoutX="249.0" layoutY="441.0" mnemonicParsing="false" onAction="#validate" prefHeight="41.0" prefWidth="187.0" styleClass="rich-blue" text="VALIDATE INSTANCE" />
+      <TextArea fx:id="log" editable="false" layoutX="34.0" layoutY="160.0" prefHeight="216.0" prefWidth="618.0" />
+   </children>
+</Pane>

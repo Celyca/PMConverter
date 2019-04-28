@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="686.0" styleClass="root" stylesheets="@PMConverter.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fh.PMConverter.view.ConvertSceneController">
+   <children>
+      <ImageView fitHeight="104.0" fitWidth="242.0" layoutX="440.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/FHJ.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="70.0" fitWidth="294.0" layoutX="-17.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/PMC.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="6.0" layoutX="-26.0" layoutY="70.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" styleClass="shape" width="729.0" />
+      <ProgressBar fx:id="progress" layoutX="30.0" layoutY="387.0" prefHeight="32.0" prefWidth="626.0" progress="0.0" />
+      <TextArea fx:id="log" editable="false" layoutX="37.0" layoutY="151.0" prefHeight="216.0" prefWidth="618.0" />
+      <Text fx:id="convertLabel" layoutX="185.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="bigText" wrappingWidth="321.23075103759766" />
+      <Button fx:id="next" disable="true" layoutX="568.0" layoutY="441.0" mnemonicParsing="false" onAction="#next" prefHeight="41.0" prefWidth="88.0" styleClass="rich-blue" text="Next" />
+      <Button fx:id="start" disable="true" layoutX="295.0" layoutY="441.0" mnemonicParsing="false" onAction="#start" prefHeight="41.0" prefWidth="88.0" styleClass="rich-blue" text="Start" />
+   </children>
+</Pane>

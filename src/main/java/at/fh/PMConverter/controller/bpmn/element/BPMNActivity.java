@@ -37,7 +37,6 @@ public class BPMNActivity {
             */
             //---------------------------------------------------------------------------------------------
             FlowNode activity = null;
-            System.out.println(type + " " + x.getName());
             if (type == 2 || type == 1) {
                 activity = BPMNController.getInstance().getBpmnInstance().newInstance(Task.class);
                 FlowNode element = setValue(activity, x);

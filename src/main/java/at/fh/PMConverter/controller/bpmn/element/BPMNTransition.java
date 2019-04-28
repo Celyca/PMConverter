@@ -20,7 +20,6 @@ public class BPMNTransition {
     public static Collection<Pair<SequenceFlow, BpmnEdge>> generateTransition(WorkflowProcess wfp, Process process) {
 
         Transitions transition = wfp.getTransitions();
-        System.out.println(transition);
 
         Collection<Transition> transitionElements = new ArrayList<>();
         transition.toElements().forEach(x -> transitionElements.add((Transition) x));
@@ -51,10 +50,8 @@ public class BPMNTransition {
                 }
                 Pair<SequenceFlow, BpmnEdge> pair = new Pair<>(sequenceFlow, Diagram.generateEdge(x, sequenceFlow));
 
-                System.out.println("YEEEEES");
                 bpmnTransitionElements.add(pair);
             } catch (Exception e) {
-                System.out.println(e);
             }
         });
         return bpmnTransitionElements;

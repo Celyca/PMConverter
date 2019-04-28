@@ -1,4 +1,4 @@
-package at.fh.PMConverter;
+package at.fh.PMConverter.model;
 
 import org.camunda.bpm.model.bpmn.instance.FlowNode;
 import org.camunda.bpm.model.bpmn.instance.SequenceFlow;

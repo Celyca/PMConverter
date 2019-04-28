@@ -20,6 +20,7 @@ public class XPDLHandler {
     //---------------------------------------------------------------------------------------------
 
     private Package xpdlFileInstance = null;
+    private String log = "";
     private static XPDLHandler theInstance;
 
 
@@ -32,45 +33,43 @@ public class XPDLHandler {
 
     //---------------------------------------------------------------------------------------------
 
-    public void convertXpdlInstance(File file) throws Exception {
-        //try {
+    public void convertXpdlInstance(File file) {
+        try {
             XMLInterfaceImpl xmli = new XMLInterfaceImpl();
             String inputFile = file.getCanonicalPath();
             xpdlFileInstance = xmli.openPackage(inputFile, true);
             xpdlFileInstance.setReadOnly(true);
-
-            BPMNController.getInstance().convertToXpdl(xpdlFileInstance);
-/*
+            log = log + "\nRead instance \nID: " + xpdlFileInstance.getId() + "\nName: " + xpdlFileInstance.getName();
         } catch (Exception e) {
-            System.out.println("Something went wrong.");
-            System.out.println(e.toString());
-            System.out.println(e.getMessage());
+            log = log + "\nFailed to read instance";
+            log = log + "\nError: " + e.toString() + "\nMessage: " + e.getMessage();
         }
-        */
     }
 
     //---------------------------------------------------------------------------------------------
 
-    static void validateXpdlInstance(Package xpdlInstance) throws Exception {
-
-        XMLInterface xmli = new XMLInterfaceImpl();
-        StandardPackageValidator pv = new StandardPackageValidator();
-        pv.init(new Properties(), xmli);
-        List verrs = new ArrayList();
-        pv.validateElement(xpdlInstance, verrs, true);
-        if (verrs.size() > 0) {
-            if (pv.hasErrors(verrs)) {
-                System.out.println("...XPDL is NOT valid");
-                System.out.println("...errors=" + verrs);
-                saveXpdlInstance(xpdlInstance);
+    public void validateXpdlInstance(Package xpdlInstance) {
+        log = "";
+        try {
+            XMLInterface xmli = new XMLInterfaceImpl();
+            StandardPackageValidator pv = new StandardPackageValidator();
+            pv.init(new Properties(), xmli);
+            List verrs = new ArrayList();
+            pv.validateElement(xpdlInstance, verrs, true);
+            if (verrs.size() > 0) {
+                if (pv.hasErrors(verrs)) {
+                    log = log + ("XPDL is NOT valid");
+                    log = log + ("Errors=" + verrs);
+                } else {
+                    log = log + ("...XPDL is valid ");
+                    log = log + ("...There are following warnings:" + verrs);
+                }
             } else {
-                System.out.println("...XPDL is valid ");
-                System.out.println("...There are following warnings:" + verrs);
-                saveXpdlInstance(xpdlInstance);
+                log = log + ("...XPDL is valid");
             }
-        } else {
-            System.out.println("...XPDL is valid");
-            saveXpdlInstance(xpdlInstance);
+        } catch (Exception e) {
+            log = log + "\nSomething went wrong";
+            log = log + "\nError: " + e.toString() + "\nMessage: " + e.getMessage();
         }
     }
 
@@ -99,5 +98,13 @@ public class XPDLHandler {
         refHead.setCountrykey("CO");
 
         return xpdlInstance;
+    }
+
+    public Package getXpdlFileInstance() {
+        return xpdlFileInstance;
+    }
+
+    public String getLog() {
+        return log;
     }
 }
