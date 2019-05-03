@@ -110,18 +110,8 @@ public class XPDLController {
             ModelElementType taskType = bpmnInstance.getModel().getType(Task.class);
             List<Activity> tasks = XPDLTask.generateTasks(wfp, process, taskType);
 
-            //Generate UserTask
-            ModelElementType userTaskType = bpmnInstance.getModel().getType(UserTask.class);
-            List<Activity> userTasks = XPDLTask.generateTasks(wfp, process, userTaskType);
-
-            //Generate ServiceTask
-            ModelElementType serviceTaskType = bpmnInstance.getModel().getType(ServiceTask.class);
-            List<Activity> serviceTasks = XPDLTask.generateTasks(wfp, process, serviceTaskType);
-
             //Add to WFP
             wfp.getActivities().addAll(tasks);
-            wfp.getActivities().addAll(userTasks);
-            wfp.getActivities().addAll(serviceTasks);
 
             //---------------------------------------------------------------------------------------------
 
